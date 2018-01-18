@@ -3,7 +3,7 @@
 CharacterArray::CharacterArray()
 {
     _cap = INITIAL_CAPACITY;
-    _char_array = new char[_cap];
+    _char_array = new char[_cap + 1];
     _char_array[0] = '\0';
     _elements = 0;
 }
@@ -12,6 +12,7 @@ CharacterArray::CharacterArray(char* str, int length)
 {
     _cap = INITIAL_CAPACITY;
     _elements = length;
+    _char_array = new char[_cap + 1];
     while(_cap <= _elements){
         _resize_array();
     }
@@ -39,31 +40,35 @@ void CharacterArray::insert(char c, int index) {
         _resize_array();
     }
 
-    while(index >= 0){
-        if(_char_array[index] > c){
-            _char_array[index + 1] = _char_array[index];
-            index--;
-        }
-        else{
-            break;
-        }
+    if(index < 0 || (_elements != 0 && index > _elements)){
+        throw IndexOutOfBoundsException();
     }
 
-    _char_array[index + 1] = c;
+    for(int i = _elements; i > index; i--){
+        _char_array[i] = _char_array[i - 1];
+    }
+
+    _char_array[index] = c;
     _elements++;
+    _char_array[_elements] = '\0';
 }
 
 void CharacterArray::setAt(char c, int index) {
+    if(index < 0 || index >= _elements){
+        throw IndexOutOfBoundsException();
+    }
     _char_array[index] = c;
 }
 
 char CharacterArray::getAt(int index) {
+    if(index < 0 || index >= _elements){
+        throw IndexOutOfBoundsException();
+    }
     return _char_array[index];
 }
 
 char CharacterArray::pop_back() {
 
-    //Example of throwing an exception
     if(isEmpty()) {
         throw EmptyException();
     }
@@ -71,15 +76,18 @@ char CharacterArray::pop_back() {
     char temp = _char_array[_elements - 1];
     _char_array[_elements - 1] = '\0';
     _elements--;
-    return temp; //change or remove this line
+    return temp;
 }
 
 char CharacterArray::removeAt(int index) {
-    char temp = _char_array[index];
-    for(int i = _elements - 1; i >= index; i--){
-        _char_array[index] = _char_array[index + 1];
+    if(index < 0 || index >= _elements){
+        throw IndexOutOfBoundsException();
     }
-    _char_array[_elements - 1] = '\0';
+    char temp = _char_array[index];
+    for(int i = index; i < _elements; i++){
+        _char_array[i] = _char_array[i + 1];
+    }
+    _char_array[_elements] = '\0';
     _elements--;
     return temp;
 }
@@ -101,18 +109,21 @@ bool CharacterArray::isEmpty() {
 }
 
 char* CharacterArray::substring(int startIndex, int length) {
-    char substring[length + 1];
+    if(startIndex < 0 || startIndex >= _elements || startIndex + length >= _elements){
+        throw IndexOutOfBoundsException();
+    }
+    char* substring = new char[length + 1];
     int j = 0;
     for(int i = startIndex; i < startIndex + length; i++){
         substring[j] = _char_array[i];
         j++;
     }
-    substring[length + 1] = '\0';
+    substring[length] = '\0';
     return substring;
 }
 
 ostream& operator <<(ostream& out, const CharacterArray& ca) {
-    for(int i = 0; i < ca._cap; i++){
+    for(int i = 0; i < ca._elements; i++){
         out << ca._char_array[i];
     }
     return out;
@@ -120,9 +131,9 @@ ostream& operator <<(ostream& out, const CharacterArray& ca) {
 
 void CharacterArray::_resize_array(){
     _cap *= 2;
-    char* temp_array = new char[_cap];
+    char* temp_array = new char[_cap + 1];
 
-    for(int i = 0; i < _cap; i++){
+    for(int i = 0; i < _elements; i++){
         temp_array[i] = _char_array[i];
     }
     delete[] _char_array;

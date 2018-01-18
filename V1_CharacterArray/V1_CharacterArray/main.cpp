@@ -127,7 +127,6 @@ int main() {
 
     printArray(ca1);
 
-    append(ca1, 'k');
     insertIntoArray(ca1, 'a', 0);
     setAt(ca1, 'j', 1);
     getAt(ca1, 1);
