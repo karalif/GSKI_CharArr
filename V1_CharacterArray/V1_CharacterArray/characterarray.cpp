@@ -31,17 +31,17 @@ void CharacterArray::append(char c) {
     if(_elements >= _cap){
         _resize_array();
     }
-    _char_array[length()] += c;
+    _char_array[_elements] = c;
     _elements++;
 }
 
 void CharacterArray::insert(char c, int index) {
-    if(_elements >= _cap){
-        _resize_array();
+    if(index < 0 || (index > _elements)){
+        throw IndexOutOfBoundsException();
     }
 
-    if(index < 0 || (_elements != 0 && index > _elements)){
-        throw IndexOutOfBoundsException();
+    if(_elements >= _cap){
+        _resize_array();
     }
 
     for(int i = _elements; i > index; i--){
@@ -109,7 +109,7 @@ bool CharacterArray::isEmpty() {
 }
 
 char* CharacterArray::substring(int startIndex, int length) {
-    if(startIndex < 0 || startIndex >= _elements || startIndex + length >= _elements){
+    if(startIndex < 0 || startIndex > _elements || startIndex + length > _elements){
         throw IndexOutOfBoundsException();
     }
     char* substring = new char[length + 1];

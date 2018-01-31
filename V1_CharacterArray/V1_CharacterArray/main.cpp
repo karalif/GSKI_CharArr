@@ -127,21 +127,74 @@ int main() {
 
     printArray(ca1);
 
+    insertIntoArray(ca1, 'a', 1);
     insertIntoArray(ca1, 'a', 0);
-    setAt(ca1, 'j', 1);
-    getAt(ca1, 1);
-    insertIntoArray(ca1, 'r', 1);
-    popFromArray(ca1);
-    removeAt(ca1, 0);
+    insertIntoArray(ca1, 'b', 1);
+    insertIntoArray(ca1, 'c', 0);
+    insertIntoArray(ca1, 'd', 4);
+    insertIntoArray(ca1, ' ', 3);
+    insertIntoArray(ca1, 'd', 4);
+    insertIntoArray(ca1, 'l', 2);
+    insertIntoArray(ca1, 'e', 3);
+    insertIntoArray(ca1, 'e', 7);
+    insertIntoArray(ca1, 'a', 7);
+    insertIntoArray(ca1, 'k', 8);
+    insertIntoArray(ca1, 'r', 7);
+    insertIntoArray(ca1, 's', -1);
 
-    clearArray(ca1);
-    clearArray(ca1);
+    append(ca1, ' ');
+    append(ca1, 'm');
+    append(ca1, 'o');
+    append(ca1, 'r');
+    append(ca1, 'e');
+    append(ca1, ' ');
+    append(ca1, 's');
+    append(ca1, 't');
+    append(ca1, 'u');
+    append(ca1, 'f');
+    append(ca1, 'f');
+
+    setAt(ca1, 'g', 12);
+
+    getAt(ca1, 3);
+    getAt(ca1, 12);
+    getAt(ca1, 17);
+    getAt(ca1, 16);
+    getAt(ca1, 9);
+    getAt(ca1, 22);
+    getAt(ca1, 0);
+
+    append(ca1, ' ');
+    append(ca1, 'p');
+    append(ca1, 'o');
+    append(ca1, 'p');
+
+    popFromArray(ca1);
+    popFromArray(ca1);
+    popFromArray(ca1);
+    popFromArray(ca1);
+
+    removeAt(ca1, 16);
+    removeAt(ca1, 5);
+    removeAt(ca1, 10);
 
     cout << endl << endl;
 
-    CharacterArray ca2((char*)"parameter constructor", 21);
-    printArray(ca2);
-    substring(ca2, 4, 11);
+    substring(ca1, 2, 6);
+    substring(ca1, 6, 5);
+    substring(ca1, 0, 5);
+    substring(ca1, 19, 7);
+    substring(ca1, -2, 4);
+    substring(ca1, 4, 0);
+
+    clearArray(ca1);
+    append(ca1, '7');
+    append(ca1, '7');
+    append(ca1, '7');
+    clearArray(ca1);
+
+    //CharacterArray ca2((char*)"parameter constructor", 21);
+    //printArray(ca2);
 
     return 0;
 }
